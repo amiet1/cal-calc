@@ -1,4 +1,11 @@
 import './globals.css'
+import { Inter } from 'next/font/google'
+
+const inter = Inter({ 
+  subsets: ['latin'],
+  variable: '--font-inter',
+  display: 'swap',
+})
 
 export const metadata = {
   title: 'Calorie Calc AI',
@@ -7,7 +14,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className={`${inter.variable}`} suppressHydrationWarning>
       <body suppressHydrationWarning>
         <div className="min-h-screen bg-gray-100">
           {children}

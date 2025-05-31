@@ -9,7 +9,7 @@ const IdentifyFood = async (base64Image) => {
     console.log('Image size (base64 chars):', base64Image.length);
 
 
-    const response = await fetch('/api/identify', {
+    const response = await fetch('/api/detectFood', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
