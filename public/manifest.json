@@ -1,0 +1,16 @@
+{
+  "name": "Calorie Calc AI",
+  "short_name": "CalorieAI",
+  "description": "Smart food calorie detection using AI",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#7C3AED",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "32x32",
+      "type": "image/svg+xml"
+    }
+  ]
+} 
