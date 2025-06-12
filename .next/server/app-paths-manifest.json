@@ -1,5 +1,6 @@
 {
-  "/page": "app/page.js",
+  "/api/detectFood/route": "app/api/detectFood/route.js",
   "/workout-guide/page": "app/workout-guide/page.js",
+  "/page": "app/page.js",
   "/nutrition-guide/page": "app/nutrition-guide/page.js"
 }

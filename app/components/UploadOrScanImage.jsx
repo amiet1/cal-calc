@@ -2,6 +2,7 @@
 
 import React, { useState, useRef } from 'react'
 import IdentifyFood from './IdentifyFood'
+import ApiKeyInput from './ApiKeyInput'
 
 export default function UploadOrScanImage() {
   const [showCamera, setShowCamera] = useState(false)
@@ -12,6 +13,7 @@ export default function UploadOrScanImage() {
   })
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(false)
+  const [isApiKeySet, setIsApiKeySet] = useState(false)
   const fileInputRef = useRef(null)
   const videoRef = useRef(null)
   const streamRef = useRef(null)
@@ -224,117 +226,127 @@ export default function UploadOrScanImage() {
 
   return (
     <div className="flex flex-col items-center gap-8">
-      <input
-        ref={fileInputRef}
-        type="file"
-        accept="image/*"
-        onChange={handleImageChange}
-        className="hidden"
-      />
-
-      {loading && (
-        <div className="text-center p-8 bg-white/50 backdrop-blur-sm rounded-3xl border border-white/20 shadow-lg">
-          <div className="loading loading-spinner loading-lg text-violet-600"></div>
-          <p className="mt-4 text-indigo-900/80 font-medium">Analyzing your food...</p>
-        </div>
-      )}
-
-      {showCamera ? (
-        <div className="relative w-full max-w-2xl aspect-square rounded-3xl overflow-hidden bg-black/5 backdrop-blur-sm border border-white/20 shadow-xl">
-          <video
-            ref={videoRef}
-            autoPlay
-            playsInline
-            className="w-full h-full object-cover"
+      <ApiKeyInput onApiKeySet={setIsApiKeySet} />
+      
+      {isApiKeySet ? (
+        <>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+            className="hidden"
           />
-          <div className="absolute bottom-6 left-0 right-0 flex justify-center gap-4">
-            <button
-              type="button"
-              className="btn glass bg-white/20 hover:bg-white/30 px-8"
-              onClick={stopCamera}
-            >
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-600 to-indigo-600 font-bold">
-                Cancel
-              </span>
-            </button>
-            <button
-              type="button"
-              className="btn glass bg-white/20 hover:bg-white/30 px-8"
-              onClick={capturePhoto}
-            >
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-600 to-indigo-600 font-bold">
-                Take Photo
-              </span>
-            </button>
-          </div>
-        </div>
-      ) : !imageUrl ? (
-        <div className="w-full max-w-md space-y-6">
-          <button 
-            type="button" 
-            className="w-full btn btn-lg glass bg-white/20 hover:bg-white/30 font-medium rounded-2xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200"
-            onClick={handleUploadClick}
-          >
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-600 to-indigo-600 font-bold">
-              Upload Image
-            </span>
-          </button>
-          <div className="divider text-indigo-900/60 font-medium">OR</div>
-          <button 
-            type="button" 
-            className="w-full btn btn-lg glass bg-white/20 hover:bg-white/30 font-medium rounded-2xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200"
-            onClick={startCamera}
-          >
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-600 to-indigo-600 font-bold">
-              Scan with Camera
-            </span>
-          </button>
-        </div>
-      ) : (
-        <div className="w-full max-w-xl bg-white/50 backdrop-blur-sm rounded-3xl border border-white/20 shadow-xl p-8">
-          <div className="rounded-2xl overflow-hidden shadow-lg mb-6">
-            <img src={imageUrl} alt="Analyzed food" className="w-full" />
-          </div>
-          
-          {analysis && (
-            <div className="space-y-6">
-              <div className="bg-violet-50/80 backdrop-blur-sm rounded-2xl p-6 border border-violet-100/80">
-                <h4 className="font-semibold text-violet-900 mb-3">Food Analysis:</h4>
-                <p className="text-lg text-violet-800">
-                  {analysis.description}
-                </p>
-              </div>
-              
-              {analysis.calories && (
-                <div className="bg-emerald-50/80 backdrop-blur-sm rounded-2xl p-6 border border-emerald-100/80 text-center">
-                  <h4 className="font-semibold text-emerald-900 mb-2">Calories:</h4>
-                  <div className="text-5xl font-black text-emerald-800">
-                    {analysis.calories}
-                    <span className="text-3xl ml-2 font-bold text-emerald-700">cal</span>
-                  </div>
-                </div>
-              )}
+
+          {loading && (
+            <div className="text-center p-8 bg-white/50 backdrop-blur-sm rounded-3xl border border-white/20 shadow-lg">
+              <div className="loading loading-spinner loading-lg text-violet-600"></div>
+              <p className="mt-4 text-indigo-900/80 font-medium">Analyzing your food...</p>
             </div>
           )}
-          
-          <button
-            type="button"
-            className="btn btn-lg glass bg-white/20 hover:bg-white/30 w-full mt-8 rounded-2xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200"
-            onClick={() => {
-              setImageUrl(null)
-              setAnalysis(null)
-            }}
-          >
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-600 to-indigo-600 font-bold">
-              Scan Another
-            </span>
-          </button>
-        </div>
-      )}
 
-      {error && (
-        <div className="bg-red-50/80 backdrop-blur-sm text-red-800 p-6 rounded-2xl border border-red-100/80 shadow-lg max-w-md">
-          {error}
+          {showCamera ? (
+            <div className="relative w-full max-w-2xl aspect-square rounded-3xl overflow-hidden bg-black/5 backdrop-blur-sm border border-white/20 shadow-xl">
+              <video
+                ref={videoRef}
+                autoPlay
+                playsInline
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute bottom-6 left-0 right-0 flex justify-center gap-4">
+                <button
+                  type="button"
+                  className="btn glass bg-white/20 hover:bg-white/30 px-8"
+                  onClick={stopCamera}
+                >
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-600 to-indigo-600 font-bold">
+                    Cancel
+                  </span>
+                </button>
+                <button
+                  type="button"
+                  className="btn glass bg-white/20 hover:bg-white/30 px-8"
+                  onClick={capturePhoto}
+                >
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-600 to-indigo-600 font-bold">
+                    Take Photo
+                  </span>
+                </button>
+              </div>
+            </div>
+          ) : !imageUrl ? (
+            <div className="w-full max-w-md space-y-6">
+              <button 
+                type="button" 
+                className="w-full btn btn-lg glass bg-white/20 hover:bg-white/30 font-medium rounded-2xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200"
+                onClick={handleUploadClick}
+              >
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-600 to-indigo-600 font-bold">
+                  Upload Image
+                </span>
+              </button>
+              <div className="divider text-indigo-900/60 font-medium">OR</div>
+              <button 
+                type="button" 
+                className="w-full btn btn-lg glass bg-white/20 hover:bg-white/30 font-medium rounded-2xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200"
+                onClick={startCamera}
+              >
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-600 to-indigo-600 font-bold">
+                  Scan with Camera
+                </span>
+              </button>
+            </div>
+          ) : (
+            <div className="w-full max-w-xl bg-white/50 backdrop-blur-sm rounded-3xl border border-white/20 shadow-xl p-8">
+              <div className="rounded-2xl overflow-hidden shadow-lg mb-6">
+                <img src={imageUrl} alt="Analyzed food" className="w-full" />
+              </div>
+              
+              {analysis && (
+                <div className="space-y-6">
+                  <div className="bg-violet-50/80 backdrop-blur-sm rounded-2xl p-6 border border-violet-100/80">
+                    <h4 className="font-semibold text-violet-900 mb-3">Food Analysis:</h4>
+                    <p className="text-lg text-violet-800">
+                      {analysis.description}
+                    </p>
+                  </div>
+                  
+                  {analysis.calories && (
+                    <div className="bg-emerald-50/80 backdrop-blur-sm rounded-2xl p-6 border border-emerald-100/80 text-center">
+                      <h4 className="font-semibold text-emerald-900 mb-2">Calories:</h4>
+                      <div className="text-5xl font-black text-emerald-800">
+                        {analysis.calories}
+                        <span className="text-3xl ml-2 font-bold text-emerald-700">cal</span>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+              
+              <button
+                type="button"
+                className="btn btn-lg glass bg-white/20 hover:bg-white/30 w-full mt-8 rounded-2xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200"
+                onClick={() => {
+                  setImageUrl(null)
+                  setAnalysis(null)
+                }}
+              >
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-600 to-indigo-600 font-bold">
+                  Scan Another
+                </span>
+              </button>
+            </div>
+          )}
+
+          {error && (
+            <div className="bg-red-50/80 backdrop-blur-sm text-red-800 p-6 rounded-2xl border border-red-100/80 shadow-lg max-w-md">
+              {error}
+            </div>
+          )}
+        </>
+      ) : (
+        <div className="text-center text-indigo-900/80">
+          Please enter your OpenAI API key to start analyzing food images.
         </div>
       )}
     </div>

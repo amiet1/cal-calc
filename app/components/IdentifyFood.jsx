@@ -6,13 +6,20 @@ const IdentifyFood = async (base64Image) => {
     if (!base64Image) {
       throw new Error('No image provided');
     }
-    console.log('Image size (base64 chars):', base64Image.length);
 
+    // Get API key from localStorage
+    const apiKey = localStorage.getItem('openai_api_key');
+    if (!apiKey) {
+      throw new Error('API key not found');
+    }
+
+    console.log('Image size (base64 chars):', base64Image.length);
 
     const response = await fetch('/api/detectFood', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'x-api-key': apiKey
       },
       body: JSON.stringify({ image: base64Image }),
       signal: controller.signal
