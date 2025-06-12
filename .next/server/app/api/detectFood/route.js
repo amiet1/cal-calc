@@ -1,0 +1,111 @@
+/*
+ * ATTENTION: An "eval-source-map" devtool has been used.
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file with attached SourceMaps in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+ */
+(() => {
+var exports = {};
+exports.id = "app/api/detectFood/route";
+exports.ids = ["app/api/detectFood/route"];
+exports.modules = {
+
+/***/ "(rsc)/./app/api/detectFood/route.js":
+/*!*************************************!*\
+  !*** ./app/api/detectFood/route.js ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   POST: () => (/* binding */ POST)\n/* harmony export */ });\n/* harmony import */ var openai__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! openai */ \"(rsc)/./node_modules/openai/index.mjs\");\n\nconst client = new openai__WEBPACK_IMPORTED_MODULE_0__[\"default\"]();\nasync function POST(request) {\n    try {\n        const body = await request.json();\n        if (!body.image) {\n            return new Response(JSON.stringify({\n                error: 'No image data provided'\n            }), {\n                status: 400,\n                headers: {\n                    'Content-Type': 'application/json'\n                }\n            });\n        }\n        const base64Image = body.image.replace(/^data:image\\/(jpeg|png|jpg);base64,/, '');\n        console.log(process.env.OPENAI_API_KEY);\n        const response = await fetch(\"https://api.openai.com/v1/chat/completions\", {\n            method: \"POST\",\n            headers: {\n                \"Authorization\": `Bearer ${process.env.OPENAI_API_KEY}`,\n                \"Content-Type\": \"application/json\"\n            },\n            body: JSON.stringify({\n                model: \"gpt-4-turbo\",\n                messages: [\n                    {\n                        role: \"user\",\n                        content: [\n                            {\n                                type: \"image_url\",\n                                image_url: {\n                                    url: `data:image/jpeg;base64,${base64Image}`\n                                }\n                            },\n                            {\n                                type: \"text\",\n                                text: \"What food do you see in this image? give me the name of the food and the calories.\"\n                            }\n                        ]\n                    }\n                ],\n                max_tokens: 500\n            })\n        });\n        const json = await response.json();\n        console.log(json);\n        console.log(response);\n        return new Response(JSON.stringify(json), {\n            status: 200,\n            headers: {\n                'Content-Type': 'application/json'\n            }\n        });\n    } catch (error) {\n        console.error('Error in /api/identify:', error);\n        const statusCode = error.response?.status || 500;\n        const errorMessage = error.response?.data?.error || error.message;\n        return new Response(JSON.stringify({\n            error: 'Failed to identify food',\n            details: errorMessage,\n            status: statusCode\n        }), {\n            status: statusCode,\n            headers: {\n                'Content-Type': 'application/json'\n            }\n        });\n    }\n}\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKHJzYykvLi9hcHAvYXBpL2RldGVjdEZvb2Qvcm91dGUuanMiLCJtYXBwaW5ncyI6Ijs7Ozs7QUFDNEI7QUFDNUIsTUFBTUMsU0FBUyxJQUFJRCw4Q0FBTUE7QUFHbEIsZUFBZUUsS0FBS0MsT0FBTztJQUNoQyxJQUFJO1FBQ0YsTUFBTUMsT0FBTyxNQUFNRCxRQUFRRSxJQUFJO1FBRS9CLElBQUksQ0FBQ0QsS0FBS0UsS0FBSyxFQUFFO1lBQ2YsT0FBTyxJQUFJQyxTQUNUQyxLQUFLQyxTQUFTLENBQUM7Z0JBQUVDLE9BQU87WUFBeUIsSUFDakQ7Z0JBQ0VDLFFBQVE7Z0JBQ1JDLFNBQVM7b0JBQUUsZ0JBQWdCO2dCQUFtQjtZQUNoRDtRQUVKO1FBRUEsTUFBTUMsY0FBY1QsS0FBS0UsS0FBSyxDQUFDUSxPQUFPLENBQUMsdUNBQXVDO1FBRTlFQyxRQUFRQyxHQUFHLENBQUNDLFFBQVFDLEdBQUcsQ0FBQ0MsY0FBYztRQUN0QyxNQUFNQyxXQUFXLE1BQU1DLE1BQU0sOENBQThDO1lBQ3ZFQyxRQUFRO1lBQ1JWLFNBQVM7Z0JBQ1AsaUJBQWlCLENBQUMsT0FBTyxFQUFFSyxRQUFRQyxHQUFHLENBQUNDLGNBQWMsRUFBRTtnQkFDdkQsZ0JBQWdCO1lBQ2xCO1lBQ0FmLE1BQU1JLEtBQUtDLFNBQVMsQ0FBQztnQkFDbkJjLE9BQU87Z0JBQ1BDLFVBQVU7b0JBQ1I7d0JBQ0VDLE1BQU07d0JBQ05DLFNBQVM7NEJBQ1A7Z0NBQ0VDLE1BQU07Z0NBQ05DLFdBQVc7b0NBQ1RDLEtBQUssQ0FBQyx1QkFBdUIsRUFBRWhCLGFBQWE7Z0NBQzlDOzRCQUNGOzRCQUNBO2dDQUNFYyxNQUFNO2dDQUNORyxNQUFNOzRCQUNSO3lCQUNEO29CQUNIO2lCQUNEO2dCQUNEQyxZQUFZO1lBQ2Q7UUFDRjtRQUNGLE1BQU0xQixPQUFPLE1BQU1lLFNBQVNmLElBQUk7UUFDaENVLFFBQVFDLEdBQUcsQ0FBQ1g7UUFDWlUsUUFBUUMsR0FBRyxDQUFDSTtRQUNaLE9BQU8sSUFBSWIsU0FDVEMsS0FBS0MsU0FBUyxDQUFDSixPQUNmO1lBQ0VNLFFBQVE7WUFDUkMsU0FBUztnQkFBRSxnQkFBZ0I7WUFBbUI7UUFDaEQ7SUFHSixFQUFFLE9BQU9GLE9BQU87UUFDZEssUUFBUUwsS0FBSyxDQUFDLDJCQUEyQkE7UUFFekMsTUFBTXNCLGFBQWF0QixNQUFNVSxRQUFRLEVBQUVULFVBQVU7UUFDN0MsTUFBTXNCLGVBQWV2QixNQUFNVSxRQUFRLEVBQUVjLE1BQU14QixTQUFTQSxNQUFNeUIsT0FBTztRQUVqRSxPQUFPLElBQUk1QixTQUNUQyxLQUFLQyxTQUFTLENBQUM7WUFDYkMsT0FBTztZQUNQMEIsU0FBU0g7WUFDVHRCLFFBQVFxQjtRQUNWLElBQ0E7WUFDRXJCLFFBQVFxQjtZQUNScEIsU0FBUztnQkFBRSxnQkFBZ0I7WUFBbUI7UUFDaEQ7SUFFSjtBQUNGIiwic291cmNlcyI6WyIvVXNlcnMvbWFyY3kvRGV2ZWxvcG1lbnQvQXJ0L2NhbG9yaWUtYWktYXBwL2FwcC9hcGkvZGV0ZWN0Rm9vZC9yb3V0ZS5qcyJdLCJzb3VyY2VzQ29udGVudCI6WyJcbmltcG9ydCBPcGVuQUkgZnJvbSBcIm9wZW5haVwiO1xuY29uc3QgY2xpZW50ID0gbmV3IE9wZW5BSSgpO1xuXG5cbmV4cG9ydCBhc3luYyBmdW5jdGlvbiBQT1NUKHJlcXVlc3QpIHtcbiAgdHJ5IHtcbiAgICBjb25zdCBib2R5ID0gYXdhaXQgcmVxdWVzdC5qc29uKCk7XG5cbiAgICBpZiAoIWJvZHkuaW1hZ2UpIHtcbiAgICAgIHJldHVybiBuZXcgUmVzcG9uc2UoXG4gICAgICAgIEpTT04uc3RyaW5naWZ5KHsgZXJyb3I6ICdObyBpbWFnZSBkYXRhIHByb3ZpZGVkJyB9KSxcbiAgICAgICAge1xuICAgICAgICAgIHN0YXR1czogNDAwLFxuICAgICAgICAgIGhlYWRlcnM6IHsgJ0NvbnRlbnQtVHlwZSc6ICdhcHBsaWNhdGlvbi9qc29uJyB9LFxuICAgICAgICB9XG4gICAgICApO1xuICAgIH1cblxuICAgIGNvbnN0IGJhc2U2NEltYWdlID0gYm9keS5pbWFnZS5yZXBsYWNlKC9eZGF0YTppbWFnZVxcLyhqcGVnfHBuZ3xqcGcpO2Jhc2U2NCwvLCAnJyk7XG5cbiAgICBjb25zb2xlLmxvZyhwcm9jZXNzLmVudi5PUEVOQUlfQVBJX0tFWSlcbiAgICBjb25zdCByZXNwb25zZSA9IGF3YWl0IGZldGNoKFwiaHR0cHM6Ly9hcGkub3BlbmFpLmNvbS92MS9jaGF0L2NvbXBsZXRpb25zXCIsIHtcbiAgICAgICAgbWV0aG9kOiBcIlBPU1RcIixcbiAgICAgICAgaGVhZGVyczoge1xuICAgICAgICAgIFwiQXV0aG9yaXphdGlvblwiOiBgQmVhcmVyICR7cHJvY2Vzcy5lbnYuT1BFTkFJX0FQSV9LRVl9YCxcbiAgICAgICAgICBcIkNvbnRlbnQtVHlwZVwiOiBcImFwcGxpY2F0aW9uL2pzb25cIixcbiAgICAgICAgfSxcbiAgICAgICAgYm9keTogSlNPTi5zdHJpbmdpZnkoe1xuICAgICAgICAgIG1vZGVsOiBcImdwdC00LXR1cmJvXCIsXG4gICAgICAgICAgbWVzc2FnZXM6IFtcbiAgICAgICAgICAgIHtcbiAgICAgICAgICAgICAgcm9sZTogXCJ1c2VyXCIsXG4gICAgICAgICAgICAgIGNvbnRlbnQ6IFtcbiAgICAgICAgICAgICAgICB7XG4gICAgICAgICAgICAgICAgICB0eXBlOiBcImltYWdlX3VybFwiLFxuICAgICAgICAgICAgICAgICAgaW1hZ2VfdXJsOiB7XG4gICAgICAgICAgICAgICAgICAgIHVybDogYGRhdGE6aW1hZ2UvanBlZztiYXNlNjQsJHtiYXNlNjRJbWFnZX1gLFxuICAgICAgICAgICAgICAgICAgfSxcbiAgICAgICAgICAgICAgICB9LFxuICAgICAgICAgICAgICAgIHtcbiAgICAgICAgICAgICAgICAgIHR5cGU6IFwidGV4dFwiLFxuICAgICAgICAgICAgICAgICAgdGV4dDogXCJXaGF0IGZvb2QgZG8geW91IHNlZSBpbiB0aGlzIGltYWdlPyBnaXZlIG1lIHRoZSBuYW1lIG9mIHRoZSBmb29kIGFuZCB0aGUgY2Fsb3JpZXMuXCIsXG4gICAgICAgICAgICAgICAgfSxcbiAgICAgICAgICAgICAgXSxcbiAgICAgICAgICAgIH0sXG4gICAgICAgICAgXSxcbiAgICAgICAgICBtYXhfdG9rZW5zOiA1MDAsXG4gICAgICAgIH0pLFxuICAgICAgfSk7XG4gICAgY29uc3QganNvbiA9IGF3YWl0IHJlc3BvbnNlLmpzb24oKTtcbiAgICBjb25zb2xlLmxvZyhqc29uKVxuICAgIGNvbnNvbGUubG9nKHJlc3BvbnNlKTtcbiAgICByZXR1cm4gbmV3IFJlc3BvbnNlKFxuICAgICAgSlNPTi5zdHJpbmdpZnkoanNvbiksXG4gICAgICB7XG4gICAgICAgIHN0YXR1czogMjAwLFxuICAgICAgICBoZWFkZXJzOiB7ICdDb250ZW50LVR5cGUnOiAnYXBwbGljYXRpb24vanNvbicgfSxcbiAgICAgIH1cbiAgICApO1xuXG4gIH0gY2F0Y2ggKGVycm9yKSB7XG4gICAgY29uc29sZS5lcnJvcignRXJyb3IgaW4gL2FwaS9pZGVudGlmeTonLCBlcnJvcik7XG5cbiAgICBjb25zdCBzdGF0dXNDb2RlID0gZXJyb3IucmVzcG9uc2U/LnN0YXR1cyB8fCA1MDA7XG4gICAgY29uc3QgZXJyb3JNZXNzYWdlID0gZXJyb3IucmVzcG9uc2U/LmRhdGE/LmVycm9yIHx8IGVycm9yLm1lc3NhZ2U7XG5cbiAgICByZXR1cm4gbmV3IFJlc3BvbnNlKFxuICAgICAgSlNPTi5zdHJpbmdpZnkoe1xuICAgICAgICBlcnJvcjogJ0ZhaWxlZCB0byBpZGVudGlmeSBmb29kJyxcbiAgICAgICAgZGV0YWlsczogZXJyb3JNZXNzYWdlLFxuICAgICAgICBzdGF0dXM6IHN0YXR1c0NvZGUsXG4gICAgICB9KSxcbiAgICAgIHtcbiAgICAgICAgc3RhdHVzOiBzdGF0dXNDb2RlLFxuICAgICAgICBoZWFkZXJzOiB7ICdDb250ZW50LVR5cGUnOiAnYXBwbGljYXRpb24vanNvbicgfSxcbiAgICAgIH1cbiAgICApO1xuICB9XG59Il0sIm5hbWVzIjpbIk9wZW5BSSIsImNsaWVudCIsIlBPU1QiLCJyZXF1ZXN0IiwiYm9keSIsImpzb24iLCJpbWFnZSIsIlJlc3BvbnNlIiwiSlNPTiIsInN0cmluZ2lmeSIsImVycm9yIiwic3RhdHVzIiwiaGVhZGVycyIsImJhc2U2NEltYWdlIiwicmVwbGFjZSIsImNvbnNvbGUiLCJsb2ciLCJwcm9jZXNzIiwiZW52IiwiT1BFTkFJX0FQSV9LRVkiLCJyZXNwb25zZSIsImZldGNoIiwibWV0aG9kIiwibW9kZWwiLCJtZXNzYWdlcyIsInJvbGUiLCJjb250ZW50IiwidHlwZSIsImltYWdlX3VybCIsInVybCIsInRleHQiLCJtYXhfdG9rZW5zIiwic3RhdHVzQ29kZSIsImVycm9yTWVzc2FnZSIsImRhdGEiLCJtZXNzYWdlIiwiZGV0YWlscyJdLCJpZ25vcmVMaXN0IjpbXSwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///(rsc)/./app/api/detectFood/route.js\n");
+
+/***/ }),
+
+/***/ "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader/index.js?name=app%2Fapi%2FdetectFood%2Froute&page=%2Fapi%2FdetectFood%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2FdetectFood%2Froute.js&appDir=%2FUsers%2Fmarcy%2FDevelopment%2FArt%2Fcalorie-ai-app%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2FUsers%2Fmarcy%2FDevelopment%2FArt%2Fcalorie-ai-app&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D!":
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/next/dist/build/webpack/loaders/next-app-loader/index.js?name=app%2Fapi%2FdetectFood%2Froute&page=%2Fapi%2FdetectFood%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2FdetectFood%2Froute.js&appDir=%2FUsers%2Fmarcy%2FDevelopment%2FArt%2Fcalorie-ai-app%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2FUsers%2Fmarcy%2FDevelopment%2FArt%2Fcalorie-ai-app&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D! ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   patchFetch: () => (/* binding */ patchFetch),\n/* harmony export */   routeModule: () => (/* binding */ routeModule),\n/* harmony export */   serverHooks: () => (/* binding */ serverHooks),\n/* harmony export */   workAsyncStorage: () => (/* binding */ workAsyncStorage),\n/* harmony export */   workUnitAsyncStorage: () => (/* binding */ workUnitAsyncStorage)\n/* harmony export */ });\n/* harmony import */ var next_dist_server_route_modules_app_route_module_compiled__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! next/dist/server/route-modules/app-route/module.compiled */ \"(rsc)/./node_modules/next/dist/server/route-modules/app-route/module.compiled.js\");\n/* harmony import */ var next_dist_server_route_modules_app_route_module_compiled__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(next_dist_server_route_modules_app_route_module_compiled__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var next_dist_server_route_kind__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! next/dist/server/route-kind */ \"(rsc)/./node_modules/next/dist/server/route-kind.js\");\n/* harmony import */ var next_dist_server_lib_patch_fetch__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! next/dist/server/lib/patch-fetch */ \"(rsc)/./node_modules/next/dist/server/lib/patch-fetch.js\");\n/* harmony import */ var next_dist_server_lib_patch_fetch__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(next_dist_server_lib_patch_fetch__WEBPACK_IMPORTED_MODULE_2__);\n/* harmony import */ var _Users_marcy_Development_Art_calorie_ai_app_app_api_detectFood_route_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./app/api/detectFood/route.js */ \"(rsc)/./app/api/detectFood/route.js\");\n\n\n\n\n// We inject the nextConfigOutput here so that we can use them in the route\n// module.\nconst nextConfigOutput = \"\"\nconst routeModule = new next_dist_server_route_modules_app_route_module_compiled__WEBPACK_IMPORTED_MODULE_0__.AppRouteRouteModule({\n    definition: {\n        kind: next_dist_server_route_kind__WEBPACK_IMPORTED_MODULE_1__.RouteKind.APP_ROUTE,\n        page: \"/api/detectFood/route\",\n        pathname: \"/api/detectFood\",\n        filename: \"route\",\n        bundlePath: \"app/api/detectFood/route\"\n    },\n    resolvedPagePath: \"/Users/marcy/Development/Art/calorie-ai-app/app/api/detectFood/route.js\",\n    nextConfigOutput,\n    userland: _Users_marcy_Development_Art_calorie_ai_app_app_api_detectFood_route_js__WEBPACK_IMPORTED_MODULE_3__\n});\n// Pull out the exports that we need to expose from the module. This should\n// be eliminated when we've moved the other routes to the new format. These\n// are used to hook into the route.\nconst { workAsyncStorage, workUnitAsyncStorage, serverHooks } = routeModule;\nfunction patchFetch() {\n    return (0,next_dist_server_lib_patch_fetch__WEBPACK_IMPORTED_MODULE_2__.patchFetch)({\n        workAsyncStorage,\n        workUnitAsyncStorage\n    });\n}\n\n\n//# sourceMappingURL=app-route.js.map//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKHJzYykvLi9ub2RlX21vZHVsZXMvbmV4dC9kaXN0L2J1aWxkL3dlYnBhY2svbG9hZGVycy9uZXh0LWFwcC1sb2FkZXIvaW5kZXguanM/bmFtZT1hcHAlMkZhcGklMkZkZXRlY3RGb29kJTJGcm91dGUmcGFnZT0lMkZhcGklMkZkZXRlY3RGb29kJTJGcm91dGUmYXBwUGF0aHM9JnBhZ2VQYXRoPXByaXZhdGUtbmV4dC1hcHAtZGlyJTJGYXBpJTJGZGV0ZWN0Rm9vZCUyRnJvdXRlLmpzJmFwcERpcj0lMkZVc2VycyUyRm1hcmN5JTJGRGV2ZWxvcG1lbnQlMkZBcnQlMkZjYWxvcmllLWFpLWFwcCUyRmFwcCZwYWdlRXh0ZW5zaW9ucz10c3gmcGFnZUV4dGVuc2lvbnM9dHMmcGFnZUV4dGVuc2lvbnM9anN4JnBhZ2VFeHRlbnNpb25zPWpzJnJvb3REaXI9JTJGVXNlcnMlMkZtYXJjeSUyRkRldmVsb3BtZW50JTJGQXJ0JTJGY2Fsb3JpZS1haS1hcHAmaXNEZXY9dHJ1ZSZ0c2NvbmZpZ1BhdGg9dHNjb25maWcuanNvbiZiYXNlUGF0aD0mYXNzZXRQcmVmaXg9Jm5leHRDb25maWdPdXRwdXQ9JnByZWZlcnJlZFJlZ2lvbj0mbWlkZGxld2FyZUNvbmZpZz1lMzAlM0QhIiwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7Ozs7O0FBQStGO0FBQ3ZDO0FBQ3FCO0FBQ3VCO0FBQ3BHO0FBQ0E7QUFDQTtBQUNBLHdCQUF3Qix5R0FBbUI7QUFDM0M7QUFDQSxjQUFjLGtFQUFTO0FBQ3ZCO0FBQ0E7QUFDQTtBQUNBO0FBQ0EsS0FBSztBQUNMO0FBQ0E7QUFDQSxZQUFZO0FBQ1osQ0FBQztBQUNEO0FBQ0E7QUFDQTtBQUNBLFFBQVEsc0RBQXNEO0FBQzlEO0FBQ0EsV0FBVyw0RUFBVztBQUN0QjtBQUNBO0FBQ0EsS0FBSztBQUNMO0FBQzBGOztBQUUxRiIsInNvdXJjZXMiOlsiIl0sInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IEFwcFJvdXRlUm91dGVNb2R1bGUgfSBmcm9tIFwibmV4dC9kaXN0L3NlcnZlci9yb3V0ZS1tb2R1bGVzL2FwcC1yb3V0ZS9tb2R1bGUuY29tcGlsZWRcIjtcbmltcG9ydCB7IFJvdXRlS2luZCB9IGZyb20gXCJuZXh0L2Rpc3Qvc2VydmVyL3JvdXRlLWtpbmRcIjtcbmltcG9ydCB7IHBhdGNoRmV0Y2ggYXMgX3BhdGNoRmV0Y2ggfSBmcm9tIFwibmV4dC9kaXN0L3NlcnZlci9saWIvcGF0Y2gtZmV0Y2hcIjtcbmltcG9ydCAqIGFzIHVzZXJsYW5kIGZyb20gXCIvVXNlcnMvbWFyY3kvRGV2ZWxvcG1lbnQvQXJ0L2NhbG9yaWUtYWktYXBwL2FwcC9hcGkvZGV0ZWN0Rm9vZC9yb3V0ZS5qc1wiO1xuLy8gV2UgaW5qZWN0IHRoZSBuZXh0Q29uZmlnT3V0cHV0IGhlcmUgc28gdGhhdCB3ZSBjYW4gdXNlIHRoZW0gaW4gdGhlIHJvdXRlXG4vLyBtb2R1bGUuXG5jb25zdCBuZXh0Q29uZmlnT3V0cHV0ID0gXCJcIlxuY29uc3Qgcm91dGVNb2R1bGUgPSBuZXcgQXBwUm91dGVSb3V0ZU1vZHVsZSh7XG4gICAgZGVmaW5pdGlvbjoge1xuICAgICAgICBraW5kOiBSb3V0ZUtpbmQuQVBQX1JPVVRFLFxuICAgICAgICBwYWdlOiBcIi9hcGkvZGV0ZWN0Rm9vZC9yb3V0ZVwiLFxuICAgICAgICBwYXRobmFtZTogXCIvYXBpL2RldGVjdEZvb2RcIixcbiAgICAgICAgZmlsZW5hbWU6IFwicm91dGVcIixcbiAgICAgICAgYnVuZGxlUGF0aDogXCJhcHAvYXBpL2RldGVjdEZvb2Qvcm91dGVcIlxuICAgIH0sXG4gICAgcmVzb2x2ZWRQYWdlUGF0aDogXCIvVXNlcnMvbWFyY3kvRGV2ZWxvcG1lbnQvQXJ0L2NhbG9yaWUtYWktYXBwL2FwcC9hcGkvZGV0ZWN0Rm9vZC9yb3V0ZS5qc1wiLFxuICAgIG5leHRDb25maWdPdXRwdXQsXG4gICAgdXNlcmxhbmRcbn0pO1xuLy8gUHVsbCBvdXQgdGhlIGV4cG9ydHMgdGhhdCB3ZSBuZWVkIHRvIGV4cG9zZSBmcm9tIHRoZSBtb2R1bGUuIFRoaXMgc2hvdWxkXG4vLyBiZSBlbGltaW5hdGVkIHdoZW4gd2UndmUgbW92ZWQgdGhlIG90aGVyIHJvdXRlcyB0byB0aGUgbmV3IGZvcm1hdC4gVGhlc2Vcbi8vIGFyZSB1c2VkIHRvIGhvb2sgaW50byB0aGUgcm91dGUuXG5jb25zdCB7IHdvcmtBc3luY1N0b3JhZ2UsIHdvcmtVbml0QXN5bmNTdG9yYWdlLCBzZXJ2ZXJIb29rcyB9ID0gcm91dGVNb2R1bGU7XG5mdW5jdGlvbiBwYXRjaEZldGNoKCkge1xuICAgIHJldHVybiBfcGF0Y2hGZXRjaCh7XG4gICAgICAgIHdvcmtBc3luY1N0b3JhZ2UsXG4gICAgICAgIHdvcmtVbml0QXN5bmNTdG9yYWdlXG4gICAgfSk7XG59XG5leHBvcnQgeyByb3V0ZU1vZHVsZSwgd29ya0FzeW5jU3RvcmFnZSwgd29ya1VuaXRBc3luY1N0b3JhZ2UsIHNlcnZlckhvb2tzLCBwYXRjaEZldGNoLCAgfTtcblxuLy8jIHNvdXJjZU1hcHBpbmdVUkw9YXBwLXJvdXRlLmpzLm1hcCJdLCJuYW1lcyI6W10sImlnbm9yZUxpc3QiOltdLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader/index.js?name=app%2Fapi%2FdetectFood%2Froute&page=%2Fapi%2FdetectFood%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2FdetectFood%2Froute.js&appDir=%2FUsers%2Fmarcy%2FDevelopment%2FArt%2Fcalorie-ai-app%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2FUsers%2Fmarcy%2FDevelopment%2FArt%2Fcalorie-ai-app&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D!\n");
+
+/***/ }),
+
+/***/ "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-client-entry-loader.js?server=true!":
+/*!******************************************************************************************************!*\
+  !*** ./node_modules/next/dist/build/webpack/loaders/next-flight-client-entry-loader.js?server=true! ***!
+  \******************************************************************************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
+/***/ "(ssr)/./node_modules/next/dist/build/webpack/loaders/next-flight-client-entry-loader.js?server=true!":
+/*!******************************************************************************************************!*\
+  !*** ./node_modules/next/dist/build/webpack/loaders/next-flight-client-entry-loader.js?server=true! ***!
+  \******************************************************************************************************/
+/***/ (() => {
+
+
+
+/***/ }),
+
+/***/ "../app-render/work-async-storage.external":
+/*!*****************************************************************************!*\
+  !*** external "next/dist/server/app-render/work-async-storage.external.js" ***!
+  \*****************************************************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("next/dist/server/app-render/work-async-storage.external.js");
+
+/***/ }),
+
+/***/ "./work-unit-async-storage.external":
+/*!**********************************************************************************!*\
+  !*** external "next/dist/server/app-render/work-unit-async-storage.external.js" ***!
+  \**********************************************************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("next/dist/server/app-render/work-unit-async-storage.external.js");
+
+/***/ }),
+
+/***/ "next/dist/compiled/next-server/app-page.runtime.dev.js":
+/*!*************************************************************************!*\
+  !*** external "next/dist/compiled/next-server/app-page.runtime.dev.js" ***!
+  \*************************************************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("next/dist/compiled/next-server/app-page.runtime.dev.js");
+
+/***/ }),
+
+/***/ "next/dist/compiled/next-server/app-route.runtime.dev.js":
+/*!**************************************************************************!*\
+  !*** external "next/dist/compiled/next-server/app-route.runtime.dev.js" ***!
+  \**************************************************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("next/dist/compiled/next-server/app-route.runtime.dev.js");
+
+/***/ })
+
+};
+;
+
+// load runtime
+var __webpack_require__ = require("../../../webpack-runtime.js");
+__webpack_require__.C(exports);
+var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
+var __webpack_exports__ = __webpack_require__.X(0, ["vendor-chunks/next","vendor-chunks/openai"], () => (__webpack_exec__("(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader/index.js?name=app%2Fapi%2FdetectFood%2Froute&page=%2Fapi%2FdetectFood%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2FdetectFood%2Froute.js&appDir=%2FUsers%2Fmarcy%2FDevelopment%2FArt%2Fcalorie-ai-app%2Fapp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=%2FUsers%2Fmarcy%2FDevelopment%2FArt%2Fcalorie-ai-app&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D!")));
+module.exports = __webpack_exports__;
+
+})();

@@ -112,13 +112,14 @@ export default function UploadOrScanImage() {
   }
 
   const startCamera = async () => {
+    console.log('startCamera clicked'); 
     try {
-      // Check if mediaDevices is supported
+      
       if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
         throw new Error('Camera access is not supported in your browser');
       }
 
-      // Check if we're in a secure context (HTTPS or localhost)
+      
       if (!window.isSecureContext) {
         throw new Error('Camera access requires a secure connection (HTTPS)');
       }
@@ -272,6 +273,7 @@ export default function UploadOrScanImage() {
           <button 
             type="button" 
             className="w-full btn btn-lg glass bg-white/20 hover:bg-white/30 font-medium rounded-2xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200"
+            onClick={handleUploadClick}
           >
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-600 to-indigo-600 font-bold">
               Upload Image

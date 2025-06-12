@@ -19,7 +19,7 @@ export async function POST(request) {
 
     const base64Image = body.image.replace(/^data:image\/(jpeg|png|jpg);base64,/, '');
 
-    
+    console.log(process.env.OPENAI_API_KEY)
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
         method: "POST",
         headers: {
