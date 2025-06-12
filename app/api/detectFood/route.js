@@ -16,24 +16,12 @@ export async function POST(request) {
       );
     }
 
-    // Get the API key from the request headers
-    const apiKey = request.headers.get('x-api-key');
-    if (!apiKey) {
-      return new Response(
-        JSON.stringify({ error: 'API key is required' }),
-        {
-          status: 401,
-          headers: { 'Content-Type': 'application/json' },
-        }
-      );
-    }
-
     const base64Image = body.image.replace(/^data:image\/(jpeg|png|jpg);base64,/, '');
 
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
         method: "POST",
         headers: {
-          "Authorization": `Bearer ${apiKey}`,
+          "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
